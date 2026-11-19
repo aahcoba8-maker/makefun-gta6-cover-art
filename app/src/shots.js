@@ -1,12 +1,12 @@
 import { renderCover, preloadCoverPhotos } from './render.js';
 const demo={size:'wide',layout:'keyart',grade:'ink',gutter:10,grain:.10,vignette:true,
-  panels:[{photo:'boulevard',zoom:1.15,x:0,y:0},{photo:'rooftop',zoom:1},{photo:'pier',zoom:1},{photo:'neon',zoom:1},{photo:'boulevard',zoom:1.6,x:0,y:.18},{photo:'rooftop',zoom:1.8,x:0,y:0},{photo:'boulevard',zoom:1}],
+  panels:[{photo:'boulevard',zoom:1.05,fx:.50,fy:.30},{photo:'rooftop',zoom:1,fx:.42,fy:.32},{photo:'pier',zoom:1,fx:.45,fy:.30},{photo:'neon',zoom:1},{photo:'boulevard',zoom:1.6,x:0,y:.18},{photo:'rooftop',zoom:1.8,fx:.42,fy:.30},{photo:'boulevard',zoom:1}],
   kicker:'WELCOME TO SOLMAR BAY',title:'TROPIC HEAT',script:'solmar bay nights',tagline:'EVERY STREET TELLS A STORY',badge:{on:true,text:'NEW'},stars:{on:true,n:5},tape:{on:true,text:'COLLECTORS EDITION'}};
 const query=new URLSearchParams(location.search), shot=query.get('shot');
 if(['keyart','band','slash'].includes(query.get('layout')))demo.layout=query.get('layout');
 if(['ink','sunset','neon'].includes(query.get('grade')))demo.grade=query.get('grade');
 if(['wide','square','portrait'].includes(query.get('size')))demo.size=query.get('size');
-if(demo.layout==='band'){demo.grade='sunset';demo.panels=[{photo:'boulevard'},{photo:'rooftop'},{photo:'neon'}];}
+if(demo.layout==='band'){demo.grade='sunset';demo.panels=[{photo:'boulevard',zoom:1.05,fx:.50,fy:.30},{photo:'rooftop',zoom:1,fx:.42,fy:.30},{photo:'neon',zoom:1,fx:.50,fy:.35}];}
 if(demo.layout==='slash'){demo.grade='neon';demo.panels=[{photo:'neon'},{photo:'pier'},{photo:'boulevard'}];}
 window.__demoState=demo;
 if(shot==='cover'){
