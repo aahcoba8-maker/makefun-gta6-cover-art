@@ -3,7 +3,7 @@ if(new URLSearchParams(location.search).get('shot')==='cover') { /* shot rendere
 else {
 const names=['keyart','band','slash','grid6','trio','full','story'], grades=['ink','sunset','neon','golden','noir','clean'];
 const sizes={wide:[1920,1080],square:[1080,1080],portrait:[1080,1350]};
-const defaults=window.__demoState||{size:'wide',layout:'keyart',grade:'ink',gutter:10,grain:.1,vignette:true,panels:[],kicker:'WELCOME TO SOLMAR BAY',title:'TROPIC HEAT',script:'solmar bay nights',tagline:'EVERY STREET TELLS A STORY',badge:{on:true,text:'NEW'},stars:{on:true,n:5},tape:{on:true,text:'COLLECTORS EDITION'}};
+const defaults=window.__demoState||{size:'wide',layout:'keyart',grade:'ink',gutter:10,grain:.1,vignette:true,panels:[],kicker:'WELCOME TO SOLMAR BAY',title:'TROPIC HEAT',script:'solmar bay nights',tagline:'EVERY STREET TELLS A STORY',badge:{on:true,text:'NEW',sub:'SUMMER 2026'},stars:{on:true,n:5},tape:{on:true,text:'COLLECTORS EDITION'}};
 let state=structuredClone(defaults), selected=0, uploads=[], history=[JSON.stringify(state)], cursor=0, drag=null;
 const $=id=>document.getElementById(id), canvas=$('cover'), ctx=canvas.getContext('2d');
 function save(){const s=JSON.stringify(state);if(history[cursor]!==s){history=history.slice(0,cursor+1);history.push(s);cursor=history.length-1;}render();}
@@ -20,7 +20,7 @@ function panelEditor(){const root=$('panelControls');root.innerHTML='';const cou
     const grade=document.createElement('select');['Global',...grades].forEach(v=>{const o=document.createElement('option');o.value=v==='Global'?'':v;o.textContent=v;grade.append(o);});grade.value=p.grade||'';grade.onchange=()=>{p.grade=grade.value||null;save();};div.append(grade);div.onclick=()=>{selected=i;render();};root.append(div);});
 }
 function syncControls(){panelEditor();$('size').value=state.size;for(const [id,key] of [['badgeOn','badge'],['starsOn','stars'],['tapeOn','tape'],['vignetteOn','vignette']])$(id).checked=key==='vignette'?state[key]!==false:!!state[key]?.on;
-  $('grainOn').checked=state.grain>0;$('badgeText').value=state.badge?.text||'';$('tapeText').value=state.tape?.text||'';$('gutter').value=state.gutter;$('grain').value=Math.round(state.grain*100);}
+  $('grainOn').checked=state.grain>0;$('badgeText').value=state.badge?.text||'';$('badgeSub').value=state.badge?.sub||'';$('tapeText').value=state.tape?.text||'';$('gutter').value=state.gutter;$('grain').value=Math.round(state.grain*100);}
 syncControls();sync();
 function restore(pos){cursor=pos;state=JSON.parse(history[cursor]);buttonSet('layouts',names,'layout');buttonSet('grades',grades,'grade');syncControls();sync();}
 $('undo').onclick=()=>{if(cursor>0)restore(cursor-1);};$('redo').onclick=()=>{if(cursor<history.length-1)restore(cursor+1);};
@@ -29,6 +29,7 @@ $('size').onchange=()=>{state.size=$('size').value;save();sync();};
 for(const [id,key] of [['badgeOn','badge'],['starsOn','stars'],['tapeOn','tape']])$(id).onchange=()=>{state[key].on=$(id).checked;save();};
 $('vignetteOn').onchange=()=>{state.vignette=$('vignetteOn').checked;save();};$('grainOn').onchange=()=>{state.grain=$('grainOn').checked?Number($('grain').value)/100:0;save();};
 $('badgeText').onchange=()=>{state.badge.text=$('badgeText').value;save();};$('tapeText').onchange=()=>{state.tape.text=$('tapeText').value;save();};
+$('badgeSub').onchange=()=>{state.badge.sub=$('badgeSub').value;save();};
 $('gutter').oninput=()=>{state.gutter=+$('gutter').value;render();};$('gutter').onchange=save;
 $('grain').oninput=()=>{state.grain=+$('grain').value/100;$('grainOn').checked=state.grain>0;render();};$('grain').onchange=save;
 function addFiles(files){const accepted=[...files].filter(file=>file.type.startsWith('image/'));const count=Math.max(1,rects[state.layout].length);accepted.forEach((file,offset)=>{const target=(selected+offset)%count;const reader=new FileReader();reader.onload=()=>{uploads.push({name:file.name,url:reader.result});state.panels[target]??={zoom:1,x:0,y:0};state.panels[target].photo=reader.result;selected=target;panelEditor();save();};reader.readAsDataURL(file);});}
