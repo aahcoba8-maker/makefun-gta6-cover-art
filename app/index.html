@@ -1,23 +1,13 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
-<link rel="stylesheet" href="./style.css">
-</head>
-<body>
-<main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
-  </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
-</main>
-<script type="module" src="./src/main.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TROPIC HEAT Cover Studio</title><link rel="stylesheet" href="/style.css"></head>
+<body><div id="studio" class="studio">
+  <header class="topbar"><div class="brand"><span class="mark">TH</span><div><b>TROPIC HEAT</b><small>COVER STUDIO</small></div></div><div class="top-actions"><button id="undo">↶ Undo</button><button id="redo">↷ Redo</button><button id="surprise" class="quiet">Surprise me</button><button id="export" class="primary">Export PNG ↓</button></div></header>
+  <main class="workspace"><aside class="sidebar">
+    <section><h2>Layout</h2><div id="layouts" class="choice-grid"></div></section>
+    <section><h2>Grade</h2><div id="grades" class="choice-grid grades"></div></section>
+    <section><h2>Canvas size</h2><select id="size"><option value="wide">1920 × 1080 · Wide</option><option value="square">1080 × 1080 · Square</option><option value="portrait">1080 × 1350 · Portrait</option></select></section>
+    <section><h2>Cover text</h2><label>Kicker<input id="kicker"></label><label>Title<input id="title"></label><label>Script<input id="script"></label><label>Tagline<input id="tagline"></label></section>
+    <section><h2>Finish</h2><div class="toggles"><label><input id="badgeOn" type="checkbox"> Badge</label><label><input id="starsOn" type="checkbox"> Stars</label><label><input id="tapeOn" type="checkbox"> Tape</label><label><input id="grainOn" type="checkbox"> Grain</label><label><input id="vignetteOn" type="checkbox"> Vignette</label></div><input id="badgeText" placeholder="Badge text"><input id="tapeText" placeholder="Tape text"><label>Gutter <input id="gutter" type="range" min="0" max="24" value="10"></label><label>Grain <input id="grain" type="range" min="0" max="30" value="10"></label></section>
+    <section><h2>Photos</h2><label class="upload">＋ Add photos<input id="upload" type="file" accept="image/*" multiple></label><div id="panelControls"></div></section>
+  </aside><section class="stage"><div class="stage-heading"><div><span class="eyebrow">LIVE PREVIEW</span><span id="dimensions">1920 × 1080</span></div><button id="allSizes" class="quiet">Export all 3 sizes</button></div><div class="canvas-wrap"><canvas id="cover"></canvas></div><div class="hint">Click a panel to select · drag to reframe · scroll to zoom</div></section></main>
+  </div><script type="module" src="/src/shots.js"></script><script type="module" src="/src/main.js"></script></body></html>
